@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gonzalo Castro — Senior Full-Stack Engineer</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink:     #0f1117;
+      --ink-2:   #3d4252;
+      --ink-3:   #8b90a0;
+      --paper:   #f7f6f2;
+      --cream:   #efeee9;
+      --accent:  #1a56db;
+      --accent-light: #e8eefb;
+      --rule:    #dddbd4;
+      --serif:   'DM Serif Display', Georgia, serif;
+      --sans:    'DM Sans', system-ui, sans-serif;
+      --radius:  4px;
+      --max:     960px;
+      --gap:     clamp(2rem, 5vw, 4rem);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--sans);
+      background: var(--paper);
+      color: var(--ink);
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(247,246,242,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--rule);
+      padding: 0 var(--gap);
+      height: 60px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo {
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      color: var(--ink);
+      text-decoration: none;
+      letter-spacing: -0.01em;
+    }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      font-size: 0.85rem;
+      font-weight: 400;
+      color: var(--ink-2);
+      text-decoration: none;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+
+    /* ── LAYOUT ── */
+    main { padding-top: 60px; }
+    section { padding: var(--gap) var(--gap); max-width: var(--max); margin: 0 auto; }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: calc(100vh - 60px);
+      display: flex; flex-direction: column; justify-content: center;
+      padding-top: clamp(3rem, 8vw, 6rem);
+      padding-bottom: clamp(3rem, 8vw, 6rem);
+      border-bottom: 1px solid var(--rule);
+    }
+    .hero-eyebrow {
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.6s ease forwards 0.1s;
+    }
+    .hero-name {
+      font-family: var(--serif);
+      font-size: clamp(3rem, 8vw, 6.5rem);
+      line-height: 1;
+      letter-spacing: -0.03em;
+      color: var(--ink);
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.7s ease forwards 0.2s;
+    }
+    .hero-name em {
+      font-style: italic;
+      color: var(--ink-2);
+    }
+    .hero-desc {
+      max-width: 560px;
+      font-size: 1.05rem;
+      font-weight: 300;
+      color: var(--ink-2);
+      line-height: 1.7;
+      margin-bottom: 2.5rem;
+      opacity: 0;
+      animation: fadeUp 0.7s ease forwards 0.35s;
+    }
+    .hero-meta {
+      display: flex; flex-wrap: wrap; gap: 1.5rem; align-items: center;
+      opacity: 0;
+      animation: fadeUp 0.7s ease forwards 0.5s;
+    }
+    .hero-tag {
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--ink-3);
+      display: flex; align-items: center; gap: 0.4rem;
+    }
+    .hero-tag::before { content: ''; width: 20px; height: 1px; background: var(--rule); }
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.65rem 1.4rem;
+      font-size: 0.85rem; font-weight: 500;
+      letter-spacing: 0.02em;
+      border-radius: var(--radius);
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .btn-primary {
+      background: var(--ink); color: #fff;
+    }
+    .btn-primary:hover { background: var(--accent); }
+    .btn-ghost {
+      border: 1px solid var(--rule); color: var(--ink-2);
+    }
+    .btn-ghost:hover { border-color: var(--ink-2); color: var(--ink); }
+
+    /* ── SECTION HEADERS ── */
+    .section-label {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink-3);
+      margin-bottom: 0.75rem;
+    }
+    .section-title {
+      font-family: var(--serif);
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      margin-bottom: var(--gap);
+      line-height: 1.1;
+    }
+
+    /* ── ABOUT ── */
+    #about {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+      border-bottom: 1px solid var(--rule);
+    }
+    .about-text p {
+      font-size: 1rem;
+      font-weight: 300;
+      color: var(--ink-2);
+      line-height: 1.8;
+      margin-bottom: 1.2rem;
+    }
+    .about-text p:last-child { margin-bottom: 0; }
+    .about-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      padding-top: 3rem;
+    }
+    .stat {
+      padding: 1.5rem;
+      background: var(--cream);
+      border: 1px solid var(--rule);
+      border-radius: var(--radius);
+    }
+    .stat-number {
+      font-family: var(--serif);
+      font-size: 2.5rem;
+      line-height: 1;
+      color: var(--ink);
+      margin-bottom: 0.4rem;
+    }
+    .stat-label {
+      font-size: 0.8rem;
+      font-weight: 400;
+      color: var(--ink-3);
+      letter-spacing: 0.04em;
+    }
+
+    /* ── PROJECTS ── */
+    #projects { border-bottom: 1px solid var(--rule); }
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+      gap: 1.5rem;
+    }
+    .project-card {
+      background: #fff;
+      border: 1px solid var(--rule);
+      border-radius: var(--radius);
+      padding: 2rem;
+      transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+    .project-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s ease;
+    }
+    .project-card:hover { border-color: #c5cfe8; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.06); }
+    .project-card:hover::before { transform: scaleX(1); }
+    .project-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.75rem; }
+    .project-client {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.4rem;
+    }
+    .project-title {
+      font-family: var(--serif);
+      font-size: 1.3rem;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+      line-height: 1.2;
+    }
+    .project-year {
+      font-size: 0.8rem;
+      color: var(--ink-3);
+      white-space: nowrap;
+      margin-left: 1rem;
+      padding-top: 0.2rem;
+    }
+    .project-desc {
+      font-size: 0.9rem;
+      font-weight: 300;
+      color: var(--ink-2);
+      line-height: 1.7;
+      margin-bottom: 1.25rem;
+    }
+    .project-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .tag {
+      font-size: 0.72rem;
+      font-weight: 500;
+      padding: 0.25rem 0.6rem;
+      background: var(--accent-light);
+      color: var(--accent);
+      border-radius: 2px;
+      letter-spacing: 0.02em;
+    }
+
+    /* ── SKILLS ── */
+    #skills {
+      background: var(--cream);
+      max-width: 100%;
+      border-bottom: 1px solid var(--rule);
+    }
+    #skills > * { max-width: var(--max); margin-left: auto; margin-right: auto; }
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.5rem;
+      max-width: var(--max);
+      margin: 0 auto;
+    }
+    .skill-group {
+      padding: 1.5rem;
+      background: #fff;
+      border: 1px solid var(--rule);
+      border-radius: var(--radius);
+    }
+    .skill-group-label {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.75rem;
+    }
+    .skill-list { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .skill-item {
+      font-size: 0.8rem;
+      font-weight: 400;
+      color: var(--ink-2);
+      padding: 0.2rem 0.5rem;
+      background: var(--cream);
+      border-radius: 2px;
+      border: 1px solid var(--rule);
+    }
+
+    /* ── CERTIFICATIONS ── */
+    #certifications { border-bottom: 1px solid var(--rule); }
+    .certs-list { display: flex; flex-direction: column; gap: 1rem; }
+    .cert-item {
+      display: flex; align-items: center; gap: 1.5rem;
+      padding: 1.25rem 1.5rem;
+      background: #fff;
+      border: 1px solid var(--rule);
+      border-radius: var(--radius);
+    }
+    .cert-icon {
+      width: 40px; height: 40px;
+      background: var(--accent-light);
+      border-radius: var(--radius);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      font-size: 1.1rem;
+    }
+    .cert-name {
+      font-weight: 500;
+      font-size: 0.95rem;
+      color: var(--ink);
+      margin-bottom: 0.15rem;
+    }
+    .cert-issuer {
+      font-size: 0.8rem;
+      color: var(--ink-3);
+      font-weight: 300;
+    }
+
+    /* ── CONTACT ── */
+    #contact { text-align: center; }
+    .contact-inner { max-width: 520px; margin: 0 auto; }
+    .contact-inner .section-title { margin-bottom: 1rem; }
+    .contact-sub {
+      font-size: 1rem;
+      font-weight: 300;
+      color: var(--ink-2);
+      margin-bottom: 2.5rem;
+      line-height: 1.7;
+    }
+    .contact-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 1rem; }
+    .contact-link {
+      display: flex; align-items: center; gap: 0.5rem;
+      font-size: 0.85rem; font-weight: 400;
+      color: var(--ink-2);
+      text-decoration: none;
+      padding: 0.6rem 1.2rem;
+      border: 1px solid var(--rule);
+      border-radius: var(--radius);
+      transition: all 0.2s;
+    }
+    .contact-link:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--rule);
+      padding: 1.5rem var(--gap);
+      display: flex; justify-content: center;
+      font-size: 0.78rem;
+      color: var(--ink-3);
+      font-weight: 300;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .reveal {
+      opacity: 0; transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 720px) {
+      #about { grid-template-columns: 1fr; gap: 2rem; }
+      .about-stats { padding-top: 0; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="nav-logo" href="#hero">Gonzalo Castro</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#certifications">Certs</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <main>
+
+    <!-- HERO -->
+    <section id="hero">
+      <p class="hero-eyebrow">Senior Full-Stack Engineer</p>
+      <h1 class="hero-name">Gonzalo<br><em>Castro</em></h1>
+      <p class="hero-desc">
+        15+ years building high-traffic web products across fintech, e-commerce, media, healthcare, and public infrastructure. React, Next.js, Node.js, Python — and the AWS cloud underneath it all.
+      </p>
+      <div class="hero-meta">
+        <a href="https://www.linkedin.com/in/gcastro90/" target="_blank" class="btn btn-primary">LinkedIn ↗</a>
+        <a href="#contact" class="btn btn-ghost">Get in touch</a>
+        <span class="hero-tag">Montevideo, Uruguay</span>
+        <span class="hero-tag">Open to remote</span>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about">
+      <div class="about-text reveal">
+        <p class="section-label">About me</p>
+        <h2 class="section-title">Engineer.<br>Leader.<br>Builder.</h2>
+        <p>I'm a full-stack engineer with over 15 years of professional experience, specializing in React, Next.js, TypeScript, and Node.js — with growing backend depth in Python (FastAPI, Django) and cloud infrastructure on AWS.</p>
+        <p>I've worked across startups, agencies, and enterprise teams in Uruguay, Argentina, and the US — always remote-first. I enjoy leading technical decisions, mentoring junior engineers, and shipping things that actually work at scale.</p>
+        <p>Currently building an IoT platform for Uruguay's national water utility at Pyxis, and pursuing AWS Developer Associate certification.</p>
+      </div>
+      <div class="about-stats reveal">
+        <div class="stat">
+          <div class="stat-number">15+</div>
+          <div class="stat-label">Years of experience</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">10+</div>
+          <div class="stat-label">Companies & products</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">4+</div>
+          <div class="stat-label">Engineers mentored</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">3</div>
+          <div class="stat-label">Certifications</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects">
+      <p class="section-label reveal">Selected work</p>
+      <h2 class="section-title reveal">Projects</h2>
+      <div class="projects-grid">
+
+        <div class="project-card reveal">
+          <div class="project-header">
+            <div>
+              <p class="project-client">Pyxis / OSE</p>
+              <h3 class="project-title">Smart Meter IoT Platform</h3>
+            </div>
+            <span class="project-year">2024–Present</span>
+          </div>
+          <p class="project-desc">Real-time monitoring platform for Uruguay's national water utility, integrating thousands of smart meters deployed across the country. Includes dashboards, geolocation maps, alerting systems, and data export — all running on AWS infrastructure.</p>
+          <div class="project-tags">
+            <span class="tag">React</span>
+            <span class="tag">Python</span>
+            <span class="tag">Django</span>
+            <span class="tag">AWS</span>
+            <span class="tag">IoT</span>
+            <span class="tag">Geolocation</span>
+          </div>
+        </div>
+
+        <div class="project-card reveal">
+          <div class="project-header">
+            <div>
+              <p class="project-client">Distillery / Shark Tank</p>
+              <h3 class="project-title">Company Intranet Platform</h3>
+            </div>
+            <span class="project-year">2022–2023</span>
+          </div>
+          <p class="project-desc">Led end-to-end development of an internal platform for Shark Tank — managing announcements, open positions, tech interviews, and employee benefits. Shipped to production and actively used by Shark Tank staff.</p>
+          <div class="project-tags">
+            <span class="tag">React</span>
+            <span class="tag">Node.js</span>
+            <span class="tag">TypeScript</span>
+            <span class="tag">Tech Lead</span>
+            <span class="tag">Full-cycle</span>
+          </div>
+        </div>
+
+        <div class="project-card reveal">
+          <div class="project-header">
+            <div>
+              <p class="project-client">Trayecto</p>
+              <h3 class="project-title">Wealth Management App</h3>
+            </div>
+            <span class="project-year">2023–2024</span>
+          </div>
+          <p class="project-desc">Sole full-stack engineer at a fintech startup building a platform for wealth managers to handle client household finances. Built financial dashboards, portfolio views, data exports, and REST APIs in Python/FastAPI.</p>
+          <div class="project-tags">
+            <span class="tag">React</span>
+            <span class="tag">Next.js</span>
+            <span class="tag">Python</span>
+            <span class="tag">FastAPI</span>
+            <span class="tag">Fintech</span>
+          </div>
+        </div>
+
+        <div class="project-card reveal">
+          <div class="project-header">
+            <div>
+              <p class="project-client">MercadoLibre</p>
+              <h3 class="project-title">Mercadopuntos Rewards</h3>
+            </div>
+            <span class="project-year">2020–2021</span>
+          </div>
+          <p class="project-desc">Frontend development for MercadoLibre's rewards program — a product used by millions of users across Latin America. Delivered user-facing features impacting the experience at scale, collaborating with cross-country teams.</p>
+          <div class="project-tags">
+            <span class="tag">React</span>
+            <span class="tag">Next.js</span>
+            <span class="tag">TypeScript</span>
+            <span class="tag">Scale</span>
+            <span class="tag">Millions of users</span>
+          </div>
+        </div>
+
+        <div class="project-card reveal">
+          <div class="project-header">
+            <div>
+              <p class="project-client">Asociación Española</p>
+              <h3 class="project-title">Teleconsultation Mobile App</h3>
+            </div>
+            <span class="project-year">2019–2020</span>
+          </div>
+          <p class="project-desc">Cross-platform mobile app (iOS & Android) enabling remote medical consultations for one of Uruguay's largest health institutions. Implemented real-time audio/video via WebRTC and managed full App Store & Play Store release lifecycle.</p>
+          <div class="project-tags">
+            <span class="tag">React Native</span>
+            <span class="tag">Node.js</span>
+            <span class="tag">WebRTC</span>
+            <span class="tag">MobX</span>
+            <span class="tag">Healthcare</span>
+          </div>
+        </div>
+
+        <div class="project-card reveal">
+          <div class="project-header">
+            <div>
+              <p class="project-client">Saatva</p>
+              <h3 class="project-title">Luxury E-commerce Checkout</h3>
+            </div>
+            <span class="project-year">2021–2022</span>
+          </div>
+          <p class="project-desc">Worked on the cart and checkout section of a luxury mattress e-commerce brand. Integrated new payment methods, reduced checkout errors, and improved performance — collaborating across product, design, QA, and backend teams.</p>
+          <div class="project-tags">
+            <span class="tag">React</span>
+            <span class="tag">Next.js</span>
+            <span class="tag">TypeScript</span>
+            <span class="tag">E-commerce</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills">
+      <p class="section-label reveal">What I work with</p>
+      <h2 class="section-title reveal">Skills</h2>
+      <div class="skills-grid">
+        <div class="skill-group reveal">
+          <p class="skill-group-label">Frontend</p>
+          <div class="skill-list">
+            <span class="skill-item">React</span><span class="skill-item">Next.js</span><span class="skill-item">TypeScript</span><span class="skill-item">React Native</span><span class="skill-item">Redux</span><span class="skill-item">Tailwind CSS</span><span class="skill-item">Material UI</span><span class="skill-item">Sass</span><span class="skill-item">Storybook</span><span class="skill-item">Webpack</span><span class="skill-item">Vite</span>
+          </div>
+        </div>
+        <div class="skill-group reveal">
+          <p class="skill-group-label">State & Data</p>
+          <div class="skill-list">
+            <span class="skill-item">React Query</span><span class="skill-item">Redux</span><span class="skill-item">GraphQL</span><span class="skill-item">REST APIs</span>
+          </div>
+        </div>
+        <div class="skill-group reveal">
+          <p class="skill-group-label">Backend</p>
+          <div class="skill-list">
+            <span class="skill-item">Node.js</span><span class="skill-item">NestJS</span><span class="skill-item">Express</span><span class="skill-item">Python</span><span class="skill-item">FastAPI</span><span class="skill-item">Django</span><span class="skill-item">Microservices</span><span class="skill-item">WebSockets</span><span class="skill-item">WebRTC</span><span class="skill-item">Java</span>
+          </div>
+        </div>
+        <div class="skill-group reveal">
+          <p class="skill-group-label">Databases</p>
+          <div class="skill-list">
+            <span class="skill-item">PostgreSQL</span><span class="skill-item">MySQL</span><span class="skill-item">MongoDB</span><span class="skill-item">Redis</span><span class="skill-item">Elasticsearch</span><span class="skill-item">Firebase</span><span class="skill-item">Prisma</span>
+          </div>
+        </div>
+        <div class="skill-group reveal">
+          <p class="skill-group-label">DevOps & Cloud</p>
+          <div class="skill-list">
+            <span class="skill-item">AWS</span><span class="skill-item">Docker</span><span class="skill-item">GitHub Actions</span><span class="skill-item">Jenkins</span><span class="skill-item">CircleCI</span><span class="skill-item">Vercel</span><span class="skill-item">Netlify</span><span class="skill-item">Git</span>
+          </div>
+        </div>
+        <div class="skill-group reveal">
+          <p class="skill-group-label">Testing</p>
+          <div class="skill-list">
+            <span class="skill-item">Jest</span><span class="skill-item">React Testing Library</span><span class="skill-item">Cypress</span><span class="skill-item">Playwright</span>
+          </div>
+        </div>
+        <div class="skill-group reveal">
+          <p class="skill-group-label">Tooling & AI</p>
+          <div class="skill-list">
+            <span class="skill-item">Figma</span><span class="skill-item">Cursor</span><span class="skill-item">GitHub Copilot</span><span class="skill-item">Postman</span><span class="skill-item">Jira</span>
+          </div>
+        </div>
+        <div class="skill-group reveal">
+          <p class="skill-group-label">Practices</p>
+          <div class="skill-list">
+            <span class="skill-item">Tech leadership</span><span class="skill-item">Code review</span><span class="skill-item">Mentoring</span><span class="skill-item">Agile/Scrum</span><span class="skill-item">CI/CD</span><span class="skill-item">SEO</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CERTIFICATIONS -->
+    <section id="certifications">
+      <p class="section-label reveal">Credentials</p>
+      <h2 class="section-title reveal">Certifications</h2>
+      <div class="certs-list">
+        <div class="cert-item reveal">
+          <div class="cert-icon">☁️</div>
+          <div>
+            <p class="cert-name">AWS Certified Cloud Practitioner</p>
+            <p class="cert-issuer">Amazon Web Services</p>
+          </div>
+        </div>
+        <div class="cert-item reveal">
+          <div class="cert-icon">⚙️</div>
+          <div>
+            <p class="cert-name">AWS Certified Developer – Associate</p>
+            <p class="cert-issuer">Amazon Web Services</p>
+          </div>
+        </div>
+        <div class="cert-item reveal">
+          <div class="cert-icon">🔄</div>
+          <div>
+            <p class="cert-name">Certified Scrum Developer (CSD)</p>
+            <p class="cert-issuer">Scrum Alliance</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+      <div class="contact-inner">
+        <p class="section-label reveal">Let's talk</p>
+        <h2 class="section-title reveal">Get in touch</h2>
+        <p class="contact-sub reveal">Open to remote full-time opportunities. Feel free to reach out via LinkedIn or email.</p>
+        <div class="contact-links reveal">
+          <a href="mailto:gcastro0690@gmail.com" class="contact-link">✉ gcastro0690@gmail.com</a>
+          <a href="https://www.linkedin.com/in/gcastro90/" target="_blank" class="contact-link">in LinkedIn</a>
+          <a href="tel:+59899797510" class="contact-link">📞 +598 99797510</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <span>© 2025 Gonzalo Castro — Montevideo, Uruguay</span>
+  </footer>
+
+  <script>
+    // Scroll reveal
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          setTimeout(() => e.target.classList.add('visible'), i * 60);
+        }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
